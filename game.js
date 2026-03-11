@@ -1,5 +1,7 @@
 'use strict';
 
+const VERSION = '1.0.0';
+
 // ===== KONSTANTY =====
 const SUITS = ['hearts', 'diamonds', 'clubs', 'spades'];
 const SUIT_SYM = { hearts: '♥', diamonds: '♦', clubs: '♣', spades: '♠' };
@@ -689,7 +691,7 @@ function showToast(msg) {
 function resizeGame() {
   const scaler = document.getElementById('game-scaler');
   if (!scaler) return;
-  const topH = 60;
+  const topH = 120;
   const bottomEl = document.getElementById('bottom-control-area');
   const bottomH = bottomEl ? bottomEl.offsetHeight : 180;
   const availH = window.innerHeight - topH - bottomH;
@@ -722,3 +724,7 @@ document.head.appendChild(style);
 
 // Init resize
 resizeGame();
+
+// Verze
+const verEl = document.getElementById('app-version');
+if (verEl) verEl.textContent = `v${VERSION}`;

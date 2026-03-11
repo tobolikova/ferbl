@@ -159,14 +159,14 @@ input:checked + .slider::before { transform: translateX(24px); }
 
 /* ===== TOP BAR ===== */
 #top-bar {
-  position: absolute; top: 0; left: 0; width: 100%; height: 60px;
+  position: absolute; top: 0; left: 0; width: 100%; height: 120px;
   display: flex; justify-content: space-between; align-items: center;
-  padding: 0 24px;
+  padding: 0 32px;
   background: var(--panel); backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255,255,255,0.08);
   z-index: 500;
 }
-#round-num { font-size: 1rem; font-weight: bold; letter-spacing: .05em; }
+#round-num { font-size: 1.6rem; font-weight: bold; letter-spacing: .05em; }
 #top-bar-center { display: flex; align-items: center; gap: 10px; }
 
 #pending-pill {
@@ -358,7 +358,7 @@ input:checked + .slider::before { transform: translateX(24px); }
 
 /* ===== TOASTS ===== */
 #toast-container {
-  position: absolute; top: 72px; left: 50%; transform: translateX(-50%);
+  position: absolute; top: 132px; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; gap: 5px;
   pointer-events: none; z-index: 3000;
 }
