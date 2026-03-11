@@ -281,7 +281,7 @@ input:checked + .slider::before { transform: translateX(24px); }
 .card {
   width: var(--card-w); height: var(--card-h);
   background: white; border-radius: 6px;
-  margin: 0 -16px;
+  margin: 0 -4px;
   border: 1px solid #333; cursor: pointer;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
