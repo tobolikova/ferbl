@@ -91,7 +91,7 @@ document.querySelectorAll('.speed-btn').forEach(btn => {
 });
 
 // ===== DECK =====
-function buildDeck(type) {
+function buildDeck(type, withJokers) {
   const deck = [];
   const ranks = type === '52' ? RANKS_52 : RANKS_32;
   for (const suit of SUITS) {
@@ -99,7 +99,7 @@ function buildDeck(type) {
       deck.push({ suit, rank, id: `${rank}_${suit}` });
     }
   }
-  if (type === '52') {
+  if (withJokers) {
     deck.push({ suit: null, rank: 'JKR', id: 'JKR_1', joker: true });
     deck.push({ suit: null, rank: 'JKR', id: 'JKR_2', joker: true });
   }
@@ -119,6 +119,7 @@ function shuffle(arr) {
 function startGame() {
   const mode = getSelected('mode-btns') || 'local';
   const deckType = getSelected('deck-type-btns') || '32';
+  const jokersInDeck = document.getElementById('rule-jokers-in-deck').checked;
   const ruleJoker = document.getElementById('rule-joker').checked;
   const ruleReturn = document.getElementById('rule-return').checked;
 
@@ -148,7 +149,7 @@ function startGame() {
     players.push({ name: pool[1], isAI: true, difficulty: 'medium', hand: [], finished: false, finishPos: null, idx: 2 });
   }
 
-  const deck = buildDeck(deckType);
+  const deck = buildDeck(deckType, jokersInDeck);
 
   // Rozdat 4 karty
   for (let i = 0; i < 4; i++) {
@@ -176,6 +177,7 @@ function startGame() {
     mode,
     deckType,
     rules: { joker: ruleJoker, return: ruleReturn },
+    lastDiscardRot: 0,
   };
 
   showScreen('none');
@@ -473,6 +475,7 @@ async function animateCardToCenter(playerIdx, cardIdx) {
   const endX = discardRect.left;
   const endY = discardRect.top;
   const rot = (Math.random() * 16) - 8;
+  G.lastDiscardRot = rot;
 
   proxy.style.left = startRect.left + 'px';
   proxy.style.top = startRect.top + 'px';
@@ -549,6 +552,7 @@ function renderCenter() {
     } else {
       d.innerHTML = `<div>${top.rank}</div><div>${SUIT_SYM[top.suit]}</div>`;
     }
+    d.style.transform = `rotate(${G.lastDiscardRot}deg)`;
     discardEl.appendChild(d);
   }
 }
@@ -584,6 +588,11 @@ function renderBottomPlayer() {
   const drawBtn = document.getElementById('draw-btn');
   drawBtn.disabled = !isMyTurn || p.finished;
   drawBtn.textContent = G.pendingDraw > 0 ? `Vzít ${G.pendingDraw} karet` : 'Vzít kartu';
+  if (isMyTurn && !p.finished) {
+    drawBtn.classList.add('draw-active');
+  } else {
+    drawBtn.classList.remove('draw-active');
+  }
 }
 
 function renderTopBar() {
@@ -686,7 +695,7 @@ function resizeGame() {
   const availH = window.innerHeight - topH - bottomH;
   const availW = w;
   const baseSize = 700;
-  const scale = Math.min(availW / baseSize, availH / baseSize, 1);
+  const scale = Math.min(availW / baseSize, availH / baseSize, 1.3);
   const topOffset = topH + availH / 2;
   scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
   scaler.style.top = topOffset + 'px';
