@@ -43,7 +43,7 @@
     <div id="ai-settings" class="hidden">
       <div class="settings-row">
         <span class="settings-label">POČET ROBOTŮ</span>
-        <div class="opt-group" id="ai-count-btns">
+        <div class="opt-group" id="ai-count-btns" style="flex-wrap:nowrap">
           <button class="opt-btn" data-value="1">1</button>
           <button class="opt-btn selected" data-value="2">2</button>
           <button class="opt-btn" data-value="3">3</button>
@@ -101,13 +101,17 @@
       <span class="settings-label">BALÍČEK KARET</span>
       <div class="opt-group" id="deck-type-btns">
         <button class="opt-btn selected" data-value="32">32 karet</button>
-        <button class="opt-btn" data-value="52">52 + žolíci</button>
+        <button class="opt-btn" data-value="52">52 karet</button>
       </div>
     </div>
 
     <!-- Volitelná pravidla -->
     <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:10px">
       <span class="settings-label">VOLITELNÁ PRAVIDLA</span>
+      <label class="switch-row">
+        <span>Žolíci v balíčku</span>
+        <label class="switch"><input type="checkbox" id="rule-jokers-in-deck"><span class="slider"></span></label>
+      </label>
       <label class="switch-row">
         <span>Žolík = brát 10 karet</span>
         <label class="switch"><input type="checkbox" id="rule-joker" checked><span class="slider"></span></label>
