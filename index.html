@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferbl</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<div id="setup-screen" class="screen active">
+  <div class="setup-container">
+    <h1 class="game-title">FERBL</h1>
+    <p class="subtitle">Upravená verze Prší</p>
+
+    <div class="settings-group">
+      <label>Počet hráčů</label>
+      <div class="btn-group" id="player-count-btns">
+        <button class="opt-btn" data-value="2">2</button>
+        <button class="opt-btn active" data-value="3">3</button>
+        <button class="opt-btn" data-value="4">4</button>
+      </div>
+    </div>
+
+    <div id="player-names-container"></div>
+
+    <div class="settings-group">
+      <label>Balíček karet</label>
+      <div class="btn-group" id="deck-type-btns">
+        <button class="opt-btn active" data-value="32">32 karet (klasické)</button>
+        <button class="opt-btn" data-value="52">52 karet + žolíci</button>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <label>Volitelná pravidla</label>
+      <div class="toggle-options">
+        <label class="toggle-label">
+          <input type="checkbox" id="rule-joker" checked>
+          <span class="toggle-track"></span>
+          <span>Žolík = brát 10 karet</span>
+        </label>
+        <label class="toggle-label">
+          <input type="checkbox" id="rule-return" checked>
+          <span class="toggle-track"></span>
+          <span>Návrat do hry</span>
+        </label>
+      </div>
+    </div>
+
+    <button id="start-btn" class="primary-btn">Začít hru</button>
+  </div>
+</div>
+
+<!-- GAME SCREEN -->
+<div id="game-screen" class="screen">
+  <div id="top-players-area"></div>
+
+  <div id="game-board">
+    <div id="draw-pile-area">
+      <div id="draw-pile" class="card-back pile">
+        <span id="draw-count"></span>
+      </div>
+      <div id="draw-pile-label">Balíček</div>
+    </div>
+
+    <div id="center-info">
+      <div id="suit-indicator" class="hidden"></div>
+      <div id="pending-draw" class="hidden">
+        <span id="pending-draw-count"></span>
+        <span>karet</span>
+      </div>
+      <div id="message-box"></div>
+    </div>
+
+    <div id="discard-pile-area">
+      <div id="discard-pile" class="pile">
+        <div id="top-card"></div>
+      </div>
+      <div id="discard-pile-label">Odhazovací hromádka</div>
+    </div>
+  </div>
+
+  <div id="bottom-player-area">
+    <div id="bottom-player-info">
+      <span id="bottom-player-name"></span>
+      <span id="bottom-card-count" class="card-count-badge"></span>
+    </div>
+    <div id="bottom-hand" class="hand"></div>
+    <div id="action-btns">
+      <button id="draw-btn" class="action-btn">Vzít kartu</button>
+      <button id="suit-pick-container" class="hidden">
+        <span>Vyber barvu:</span>
+        <button class="suit-btn" data-suit="hearts">♥</button>
+        <button class="suit-btn" data-suit="diamonds">♦</button>
+        <button class="suit-btn" data-suit="clubs">♣</button>
+        <button class="suit-btn" data-suit="spades">♠</button>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- WIN SCREEN -->
+<div id="win-screen" class="screen">
+  <div class="win-container">
+    <div class="trophy">🏆</div>
+    <h2 id="win-message"></h2>
+    <div id="final-standings"></div>
+    <button id="play-again-btn" class="primary-btn">Hrát znovu</button>
+    <button id="back-to-menu-btn" class="secondary-btn">Nastavení</button>
+  </div>
+</div>
+
+<!-- SUIT PICKER MODAL -->
+<div id="suit-modal" class="modal hidden">
+  <div class="modal-content">
+    <h3>Vyber barvu</h3>
+    <div class="suit-grid">
+      <button class="suit-pick-btn" data-suit="hearts"><span class="suit-icon red">♥</span><span>Srdce</span></button>
+      <button class="suit-pick-btn" data-suit="diamonds"><span class="suit-icon red">♦</span><span>Káry</span></button>
+      <button class="suit-pick-btn" data-suit="clubs"><span class="suit-icon">♣</span><span>Kříže</span></button>
+      <button class="suit-pick-btn" data-suit="spades"><span class="suit-icon">♠</span><span>Piky</span></button>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
