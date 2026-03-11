@@ -12,6 +12,12 @@ jobs:
       - name: Checkout kódu
         uses: actions/checkout@v4
 
+      - name: Cache busting (vložit git hash do CSS/JS URLs)
+        run: |
+          GIT_HASH=$(git rev-parse --short HEAD)
+          sed -i "s|href=\"style\.css\"|href=\"style.css?v=$GIT_HASH\"|g" index.html
+          sed -i "s|src=\"game\.js\"|src=\"game.js?v=$GIT_HASH\"|g" index.html
+
       - name: Deploy přes FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
