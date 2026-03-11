@@ -282,8 +282,8 @@ input:checked + .slider::before { transform: translateX(24px); }
   border: 1px solid #bbb;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
-  font-weight: bold; font-size: 1.3rem;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+  font-weight: bold; font-size: 1.45rem;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
 }
 
 /* ===== CARDS ===== */
@@ -315,6 +315,7 @@ input:checked + .slider::before { transform: translateX(24px); }
   position: fixed;
   width: var(--card-w); height: var(--card-h);
   background: white; border-radius: 6px;
+  border: 1px solid #bbb;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   font-weight: bold; font-size: 1.45rem;
   box-shadow: 5px 5px 15px rgba(0,0,0,0.5);

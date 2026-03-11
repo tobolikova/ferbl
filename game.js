@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION = '1.0.0';
+const VERSION = '1.0.3';
 
 // ===== KONSTANTY =====
 const SUITS = ['hearts', 'diamonds', 'clubs', 'spades'];
@@ -485,7 +485,7 @@ async function animateCardToCenter(playerIdx, cardIdx) {
   proxy.innerHTML = card.joker
     ? `<div>JKR</div><div>🃏</div>`
     : `<div>${card.rank}</div><div>${SUIT_SYM[card.suit]}</div>`;
-  const duration = getDelay(450);
+  const duration = Math.max(getDelay(450), 200);
   proxy.style.transitionDuration = (duration / 1000) + 's';
   proxy.style.transitionProperty = 'left,top,opacity,transform';
 
