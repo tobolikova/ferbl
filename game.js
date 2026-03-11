@@ -1,6 +1,6 @@
 'use strict';
 
-const VERSION = '1.0.2';
+const VERSION = '1.0.3';
 
 // ===== KONSTANTY =====
 const SUITS = ['hearts', 'diamonds', 'clubs', 'spades'];
@@ -491,7 +491,6 @@ async function animateCardToCenter(playerIdx, cardIdx) {
 
   // Cílová pozice – střed odhazovací hromádky
   const discardEl = document.getElementById('discard-pile');
-  discardEl.innerHTML = '';  // skrýt starou kartu před animací
   const discardRect = discardEl.getBoundingClientRect();
   const endX = discardRect.left;
   const endY = discardRect.top;
