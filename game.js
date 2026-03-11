@@ -210,6 +210,8 @@ function canPlay(card) {
     return false;
   }
 
+  if (card.rank === 'Q') return true;
+
   if (card.rank === 'K' && card.suit === 'spades') {
     return card.suit === G.currentSuit || card.rank === top.rank;
   }
@@ -352,10 +354,26 @@ function pickSuit(suit) {
   G.currentSuit = suit;
   G.waitingForSuit = false;
   document.getElementById('suit-modal').classList.add('hidden');
-  showToast(`Zvolena barva: ${SUIT_SYM[suit]}`);
+  showColorAnnouncement(suit);
   advanceTurn();
   renderAll();
   maybeScheduleAi();
+}
+
+function showColorAnnouncement(suit) {
+  const overlay = document.getElementById('color-announcement');
+  const isRedSuit = suit === 'hearts' || suit === 'diamonds';
+  const suitNames = { hearts: 'Srdce', diamonds: 'Káry', clubs: 'Kříže', spades: 'Piky' };
+  overlay.querySelector('.color-ann-sym').textContent = SUIT_SYM[suit];
+  overlay.querySelector('.color-ann-sym').style.color = isRedSuit ? '#e74c3c' : '#1a1c2c';
+  overlay.querySelector('.color-ann-name').textContent = suitNames[suit];
+  const inner = overlay.querySelector('.color-ann-inner');
+  inner.style.animation = 'none';
+  overlay.classList.remove('hidden');
+  void inner.offsetHeight;
+  inner.style.animation = '';
+  clearTimeout(overlay._timer);
+  overlay._timer = setTimeout(() => overlay.classList.add('hidden'), 1700);
 }
 
 async function playerDraw(playerIdx) {
@@ -607,11 +625,13 @@ function renderTopBar() {
     pill.classList.add('hidden');
   }
 
-  // Aktuální barva (zobrazit jen po Q)
-  const top = G.discardPile[G.discardPile.length - 1];
+  // Aktuální barva – vždy viditelná
   const suitPill = document.getElementById('suit-pill');
-  if (top && top.rank === 'Q' && G.currentSuit) {
-    suitPill.textContent = SUIT_SYM[G.currentSuit];
+  if (G.currentSuit) {
+    const isRedSuit = G.currentSuit === 'hearts' || G.currentSuit === 'diamonds';
+    suitPill.innerHTML = `<span style="color:${isRedSuit ? 'var(--red)' : '#fff'};font-size:1.4rem">${SUIT_SYM[G.currentSuit]}</span>`;
+    suitPill.style.borderColor = isRedSuit ? 'rgba(231,76,60,0.6)' : 'rgba(255,255,255,0.25)';
+    suitPill.style.background = isRedSuit ? 'rgba(231,76,60,0.18)' : 'rgba(255,255,255,0.08)';
     suitPill.classList.remove('hidden');
   } else {
     suitPill.classList.add('hidden');

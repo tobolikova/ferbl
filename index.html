@@ -162,17 +162,26 @@
 
   <!-- Spodní oblast: ruka + info hráče -->
   <div id="bottom-control-area">
-    <div id="my-hand"></div>
-    <div id="bottom-row">
+    <div id="cards-row">
       <div id="my-player-slot-container"></div>
-      <div id="action-area">
-        <button id="draw-btn" class="btn-action">Vzít kartu</button>
-      </div>
+      <div id="my-hand"></div>
+    </div>
+    <div id="action-area">
+      <button id="draw-btn" class="btn-action">Vzít kartu</button>
     </div>
   </div>
 
   <!-- Toasty -->
   <div id="toast-container"></div>
+
+  <!-- Oznámení změny barvy -->
+  <div id="color-announcement" class="hidden">
+    <div class="color-ann-inner">
+      <span class="color-ann-sym">♥</span>
+      <div class="color-ann-label">ZVOLENA BARVA</div>
+      <span class="color-ann-name">Srdce</span>
+    </div>
+  </div>
 
   <!-- Předej zařízení overlay -->
   <div id="pass-overlay" class="screen hidden" style="z-index:5000">
