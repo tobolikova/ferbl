@@ -508,7 +508,7 @@ function renderOpponents() {
   const container = document.getElementById('players-container');
   container.innerHTML = '';
   const n = G.players.length;
-  const radiusX = 310, radiusY = 200;
+  const radiusX = 400, radiusY = 200;
 
   G.players.forEach((p, i) => {
     const slot = document.createElement('div');
@@ -689,13 +689,13 @@ function showToast(msg) {
 function resizeGame() {
   const scaler = document.getElementById('game-scaler');
   if (!scaler) return;
-  const w = window.innerWidth;
-  const bottomH = 200; // approx bottom area height
   const topH = 60;
+  const bottomEl = document.getElementById('bottom-control-area');
+  const bottomH = bottomEl ? bottomEl.offsetHeight : 180;
   const availH = window.innerHeight - topH - bottomH;
-  const availW = w;
-  const baseSize = 700;
-  const scale = Math.min(availW / baseSize, availH / baseSize, 1.3);
+  const availW = window.innerWidth;
+  const baseW = 900, baseH = 430;
+  const scale = Math.min(availW / baseW, availH / baseH, 2.0);
   const topOffset = topH + availH / 2;
   scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
   scaler.style.top = topOffset + 'px';
