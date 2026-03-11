@@ -3,7 +3,7 @@ name: Deploy na webserver přes FTP
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
