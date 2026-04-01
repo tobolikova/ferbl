@@ -138,8 +138,9 @@ input:checked + .slider::before { transform: translateX(24px); }
 .btn-action:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 .btn-action:disabled { opacity: 0.3; cursor: default; }
 .btn-action.draw-active {
-  border-color: var(--accent);
-  color: var(--accent);
+  background: rgba(0,255,204,0.12);
+  border-color: var(--accent); border-width: 2px;
+  color: var(--accent); font-weight: 700;
   animation: drawPulse 1.2s ease-in-out infinite;
 }
 @keyframes drawPulse {
@@ -366,8 +367,9 @@ input:checked + .slider::before { transform: translateX(24px); }
   pointer-events: none; z-index: 3000;
 }
 .toast {
-  background: rgba(0,0,0,0.82); border: 1px solid #444;
-  padding: 7px 20px; border-radius: 20px; color: #fff; font-size: 0.88rem;
+  background: rgba(15,17,32,0.97); border: 1.5px solid var(--accent);
+  padding: 11px 26px; border-radius: 22px; color: #fff; font-size: 1rem; font-weight: 600;
+  box-shadow: 0 0 18px rgba(0,255,204,0.25), 0 4px 16px rgba(0,0,0,0.6);
   opacity: 0; white-space: nowrap;
   animation: fadeInOut 2.2s forwards;
 }
