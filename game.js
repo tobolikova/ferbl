@@ -12,6 +12,7 @@ const AI_NAMES = ['Lily', 'Otto', 'Max', 'Mia', 'Hugo', 'Ema', 'Leo', 'Bruno', '
 // ===== STAV HRY =====
 let G = {};
 let speed = 1;
+let currentScale = 1;
 
 function getDelay(base = 800) { return base / speed; }
 
@@ -486,6 +487,8 @@ async function animateCardToCenter(playerIdx, cardIdx) {
     ? `<div>JKR</div><div>🃏</div>`
     : `<div>${card.rank}</div><div>${SUIT_SYM[card.suit]}</div>`;
   const duration = Math.max(getDelay(450), 200);
+  proxy.style.transformOrigin = 'top left';
+  proxy.style.transform = `scale(${currentScale})`;
   proxy.style.transitionDuration = (duration / 1000) + 's';
   proxy.style.transitionProperty = 'left,top,opacity,transform';
 
@@ -505,7 +508,7 @@ async function animateCardToCenter(playerIdx, cardIdx) {
   proxy.getBoundingClientRect(); // force reflow
   proxy.style.left = endX + 'px';
   proxy.style.top = endY + 'px';
-  proxy.style.transform = `rotate(${rot}deg)`;
+  proxy.style.transform = `scale(${currentScale}) rotate(${rot}deg)`;
 
   await delay(duration + 50);
   proxy.remove();
@@ -718,6 +721,7 @@ function resizeGame() {
   const availW = window.innerWidth;
   const baseW = 900, baseH = 430;
   const scale = Math.min(availW / baseW, availH / baseH, 2.0);
+  currentScale = scale;
   const topOffset = topH + availH / 2;
   scaler.style.transform = `translate(-50%, -50%) scale(${scale})`;
   scaler.style.top = topOffset + 'px';
