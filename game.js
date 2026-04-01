@@ -510,6 +510,9 @@ async function animateCardToCenter(playerIdx, cardIdx) {
   proxy.style.top = endY + 'px';
   proxy.style.transform = `scale(${currentScale}) rotate(${rot}deg)`;
 
+  // Stará karta na hromádce zmizí přesně v okamžiku přistání proxy
+  setTimeout(() => { discardEl.innerHTML = ''; }, duration);
+
   await delay(duration + 50);
   proxy.remove();
 }
