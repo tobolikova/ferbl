@@ -1,0 +1,32 @@
+name: Deploy na webserver přes FTP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout kódu
+        uses: actions/checkout@v4
+
+      - name: Cache busting (vložit git hash do CSS/JS URLs)
+        run: |
+          GIT_HASH=$(git rev-parse --short HEAD)
+          sed -i "s|href=\"style\.css\"|href=\"style.css?v=$GIT_HASH\"|g" index.html
+          sed -i "s|src=\"game\.js\"|src=\"game.js?v=$GIT_HASH\"|g" index.html
+
+      - name: Deploy přes FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .github/**

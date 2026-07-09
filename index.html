@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Ferbl</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-container">
+
+  <!-- ===== NASTAVENÍ ===== -->
+  <div id="screen-setup" class="screen">
+    <div class="setup-title">FERBL</div>
+    <div class="setup-subtitle">Upravená verze Prší</div>
+
+    <div class="settings-row">
+      <span class="settings-label">HERNÍ MÓD</span>
+      <div class="opt-group" id="mode-btns">
+        <button class="opt-btn selected" data-value="local">Lokální</button>
+        <button class="opt-btn" data-value="ai">Vs roboti</button>
+        <button class="opt-btn" data-value="online">Online</button>
+      </div>
+    </div>
+
+    <!-- Lokální nastavení -->
+    <div id="local-settings">
+      <div class="settings-row">
+        <span class="settings-label">POČET HRÁČŮ</span>
+        <div class="opt-group" id="player-count-btns">
+          <button class="opt-btn" data-value="2">2</button>
+          <button class="opt-btn selected" data-value="3">3</button>
+          <button class="opt-btn" data-value="4">4</button>
+          <button class="opt-btn" data-value="5">5</button>
+          <button class="opt-btn" data-value="6">6</button>
+        </div>
+      </div>
+      <div id="player-names-container"></div>
+    </div>
+
+    <!-- AI nastavení -->
+    <div id="ai-settings" class="hidden">
+      <div class="settings-row">
+        <span class="settings-label">POČET ROBOTŮ</span>
+        <div class="opt-group" id="ai-count-btns" style="flex-wrap:nowrap">
+          <button class="opt-btn" data-value="1">1</button>
+          <button class="opt-btn selected" data-value="2">2</button>
+          <button class="opt-btn" data-value="3">3</button>
+          <button class="opt-btn" data-value="4">4</button>
+          <button class="opt-btn" data-value="5">5</button>
+        </div>
+      </div>
+      <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:8px">
+        <span class="settings-label">OBTÍŽNOST</span>
+        <div class="opt-group" id="ai-diff-btns">
+          <button class="opt-btn" data-value="easy">Lehká</button>
+          <button class="opt-btn selected" data-value="medium">Střední</button>
+          <button class="opt-btn" data-value="hard">Těžká</button>
+        </div>
+      </div>
+      <div class="name-row">
+        <label>Tvé jméno</label>
+        <input type="text" id="ai-player-name" value="TY" class="name-input">
+      </div>
+    </div>
+
+    <!-- Online nastavení -->
+    <div id="online-settings" class="hidden">
+      <div class="opt-group" style="margin-bottom:12px">
+        <button class="opt-btn selected" id="online-create-btn">Vytvořit hru</button>
+        <button class="opt-btn" id="online-join-btn">Připojit se</button>
+      </div>
+      <div id="online-create-panel">
+        <div class="name-row">
+          <label>Tvé jméno</label>
+          <input type="text" id="online-host-name" value="TY" class="name-input">
+        </div>
+        <button class="btn-menu" id="do-create-room-btn" style="margin-top:8px">Vytvořit místnost</button>
+        <div id="room-code-display" class="hidden" style="margin-top:12px;text-align:center">
+          <div class="settings-label">KÓD MÍSTNOSTI</div>
+          <div class="room-code-box"><span id="room-code-text"></span></div>
+          <div style="font-size:0.78rem;opacity:0.6;margin-top:4px">Sdílej kód s ostatními</div>
+        </div>
+      </div>
+      <div id="online-join-panel" class="hidden">
+        <div class="name-row">
+          <label>Tvé jméno</label>
+          <input type="text" id="online-join-name" value="Hráč" class="name-input">
+        </div>
+        <div class="name-row">
+          <label>Kód hry</label>
+          <input type="text" id="room-code-input" class="name-input" placeholder="ABC123" maxlength="6" style="text-transform:uppercase;letter-spacing:.15em">
+        </div>
+        <button class="btn-menu" id="do-join-room-btn" style="margin-top:8px">Připojit se</button>
+      </div>
+    </div>
+
+    <!-- Balíček -->
+    <div class="settings-row">
+      <span class="settings-label">BALÍČEK KARET</span>
+      <div class="opt-group" id="deck-type-btns">
+        <button class="opt-btn selected" data-value="32">32 karet</button>
+        <button class="opt-btn" data-value="52">52 karet</button>
+      </div>
+    </div>
+
+    <!-- Volitelná pravidla -->
+    <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:10px">
+      <span class="settings-label">VOLITELNÁ PRAVIDLA</span>
+      <label class="switch-row">
+        <span>Žolíci v balíčku</span>
+        <label class="switch"><input type="checkbox" id="rule-jokers-in-deck"><span class="slider"></span></label>
+      </label>
+      <label class="switch-row">
+        <span>Žolík = brát 10 karet</span>
+        <label class="switch"><input type="checkbox" id="rule-joker" checked><span class="slider"></span></label>
+      </label>
+      <label class="switch-row">
+        <span>Návrat do hry</span>
+        <label class="switch"><input type="checkbox" id="rule-return" checked><span class="slider"></span></label>
+      </label>
+    </div>
+
+    <button class="btn-menu btn-start" id="start-btn">HRÁT</button>
+    <div id="app-version" style="margin-top:14px;font-size:0.75rem;color:var(--text-dim);opacity:0.45;letter-spacing:.05em;"></div>
+  </div>
+
+  <!-- ===== HERNÍ UI ===== -->
+
+  <!-- Horní lišta -->
+  <div id="top-bar">
+    <div id="round-display">
+      <span id="round-num">HRA</span>
+    </div>
+    <div id="top-bar-center">
+      <div id="pending-pill" class="hidden">
+        <span id="pending-count">0</span>&nbsp;karet
+      </div>
+      <div id="suit-pill" class="hidden"></div>
+      <div class="speed-control">
+        <button class="speed-btn active" data-speed="1">1×</button>
+        <button class="speed-btn" data-speed="2">2×</button>
+        <button class="speed-btn" data-speed="4">4×</button>
+      </div>
+    </div>
+    <button id="menu-btn">Menu</button>
+  </div>
+
+  <!-- Herní scaler (soupeři + stůl) -->
+  <div id="game-scaler">
+    <div id="players-container"></div>
+    <div id="center-area">
+      <!-- Balíček -->
+      <div id="draw-pile">
+        <span id="deck-count-label"></span>
+      </div>
+      <!-- Odhoz -->
+      <div id="discard-pile"></div>
+    </div>
+  </div>
+
+  <!-- Spodní oblast: ruka + info hráče -->
+  <div id="bottom-control-area">
+    <div id="cards-row">
+      <div id="my-player-slot-container"></div>
+      <div id="my-hand"></div>
+    </div>
+    <div id="action-area">
+      <button id="draw-btn" class="btn-action">Vzít kartu</button>
+    </div>
+  </div>
+
+  <!-- Toasty -->
+  <div id="toast-container"></div>
+
+  <!-- Oznámení změny barvy -->
+  <div id="color-announcement" class="hidden">
+    <div class="color-ann-inner">
+      <span class="color-ann-sym">♥</span>
+      <div class="color-ann-label">ZVOLENA BARVA</div>
+      <span class="color-ann-name">Srdce</span>
+    </div>
+  </div>
+
+  <!-- Předej zařízení overlay -->
+  <div id="pass-overlay" class="screen hidden" style="z-index:5000">
+    <div class="pass-content">
+      <div style="font-size:3rem">📱</div>
+      <h2 style="color:var(--text-dim)">Předej zařízení</h2>
+      <p style="color:var(--text-dim);font-size:0.9rem">Je na řadě:</p>
+      <h3 id="pass-player-name" style="font-size:2rem;color:var(--accent)"></h3>
+      <button class="btn-menu" id="pass-ready-btn" style="margin-top:16px;width:220px">Jsem připraven</button>
+    </div>
+  </div>
+
+  <!-- Modal výběru barvy -->
+  <div id="suit-modal" class="screen hidden" style="z-index:4000">
+    <div class="modal-box">
+      <h3 style="margin-bottom:18px;font-size:1.1rem">Vyber barvu</h3>
+      <div class="suit-grid">
+        <button class="suit-pick-btn" data-suit="hearts"><span class="s red">♥</span><span>Srdce</span></button>
+        <button class="suit-pick-btn" data-suit="diamonds"><span class="s red">♦</span><span>Káry</span></button>
+        <button class="suit-pick-btn" data-suit="clubs"><span class="s">♣</span><span>Kříže</span></button>
+        <button class="suit-pick-btn" data-suit="spades"><span class="s">♠</span><span>Piky</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Obrazovka vítěze -->
+  <div id="screen-win" class="screen hidden">
+    <div class="modal-box" style="min-width:300px;max-width:420px;width:90vw">
+      <div style="font-size:3.5rem;margin-bottom:8px">🏆</div>
+      <h2 id="win-title" style="font-size:1.4rem;margin-bottom:16px"></h2>
+      <div id="standings" style="width:100%;display:flex;flex-direction:column;gap:6px;margin-bottom:20px"></div>
+      <button class="btn-menu" id="play-again-btn" style="width:100%">HRÁT ZNOVU</button>
+      <button class="btn-menu btn-secondary" id="back-setup-btn" style="width:100%;margin-top:8px">NASTAVENÍ</button>
+    </div>
+  </div>
+
+</div><!-- /#game-container -->
+
+<script src="game.js"></script>
+</body>
+</html>
